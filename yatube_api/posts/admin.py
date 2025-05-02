@@ -3,8 +3,13 @@ from django.contrib import admin
 from .models import Group, Post
 
 
+class BaseAdmin(admin.ModelAdmin):
+    """Базовый класс админ-панели с общими настройками"""
+    empty_value_display = ' '
+
+
 @admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(BaseAdmin):
     list_display = (
         'pk',
         'pub_date',
@@ -14,11 +19,10 @@ class PostAdmin(admin.ModelAdmin):
     )
     search_fields = ('text',)
     list_filter = ('pub_date',)
-    empty_value_display = ' '
 
 
 @admin.register(Group)
-class GroupAdmin(admin.ModelAdmin):
+class GroupAdmin(BaseAdmin):
     list_display = (
         'title',
         'slug',
@@ -27,4 +31,3 @@ class GroupAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     search_fields = ('slug',)
     list_filter = ('title',)
-    empty_value_display = ' '

@@ -36,7 +36,7 @@ class Post(models.Model):
     )
 
     class Meta:
-        ordering = ['pub_date']
+        ordering = ('pub_date',)
         default_related_name = 'posts'
 
     def __str__(self):
@@ -86,7 +86,12 @@ class Follow(models.Model):
             models.UniqueConstraint(
                 fields=('user', 'following'),
                 name='unique_follow'
-            ),)
+            ),
+            models.CheckConstraint(
+                check=~models.Q(user=models.F('following')),
+                name='prevent_self_follow'
+            ),
+        )
 
     def __str__(self):
         return f'{self.user} follows {self.following}'

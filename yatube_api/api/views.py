@@ -14,20 +14,24 @@ from api.serializers import (
 from posts.models import Group, Comment, Post
 
 
-class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+class BasePermissionViewSet(viewsets.ModelViewSet):
+    """Базовый класс с общими настройками прав доступа"""
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
+
+
+class PostViewSet(BasePermissionViewSet):
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        return Post.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 
-class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
+class CommentViewSet(BasePermissionViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def get_post(self):
         return get_object_or_404(Post, id=self.kwargs.get('post_id'))
@@ -46,10 +50,10 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class FollowViewSet(mixins.CreateModelMixin,
-                    mixins.ListModelMixin,
-                    viewsets.GenericViewSet):
+                   mixins.ListModelMixin,
+                   viewsets.GenericViewSet):
     serializer_class = FollowSerializer
-    filter_backends = [SearchFilter]
+    filter_backends = (SearchFilter,)
     search_fields = ('following__username',)
 
     def get_user(self):
