@@ -11,7 +11,7 @@ from api.serializers import (
     GroupSerializer,
     PostSerializer
 )
-from posts.models import Group, Comment, Post
+from posts.models import Group, Post
 
 
 class BasePermissionViewSet(viewsets.ModelViewSet):
@@ -50,8 +50,8 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class FollowViewSet(mixins.CreateModelMixin,
-                   mixins.ListModelMixin,
-                   viewsets.GenericViewSet):
+                    mixins.ListModelMixin,
+                    viewsets.GenericViewSet):
     serializer_class = FollowSerializer
     filter_backends = (SearchFilter,)
     search_fields = ('following__username',)
