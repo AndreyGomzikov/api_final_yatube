@@ -59,12 +59,10 @@ url = f"http://127.0.0.1:8000/api/books/{book_id}/"
 response = requests.delete(url)
 print(response.status_code)
 
-
-Раздел "Использованные технологии". В нем можно перечислить
-· использованные каркасы (framework) и библиотеки (library)
-· с их названиями, ролью в проекте и ссылкой на документацию.
-· Это так называемый "стек (технологий)" нашего проекта.
-Раздел "Автор". В нем можно указать свои имя, фамилию и ссылку на гитхаб. И даже всю команду в групповом задании.
+## Автор
+Гомзиков Андрей Леонидович
+Github:
+https://github.com/AndreyGomzikov/api_final_yatube
 
 
 ## Как запустить проект:
@@ -74,15 +72,15 @@ git clone https://github.com/yandex-praktikum/api_final_yatube.git
 
 Cоздать и активировать виртуальное окружение:
 
-python3 -m venv env
+python -m venv env
 source env/bin/activate
 Установить зависимости из файла requirements.txt:
 
-python3 -m pip install --upgrade pip
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 Выполнить миграции:
 
-python3 manage.py migrate
+python manage.py migrate
 Запустить проект:
 
-python3 manage.py runserver
+python manage.py runserver

@@ -4,7 +4,8 @@ from .models import Group, Post
 
 
 class BaseAdmin(admin.ModelAdmin):
-    """Базовый класс админ-панели с общими настройками"""
+    """Базовый класс админ-панели с общими настройками."""
+
     empty_value_display = ' '
 
 

@@ -15,7 +15,8 @@ from posts.models import Group, Post
 
 
 class BasePermissionViewSet(viewsets.ModelViewSet):
-    """Базовый класс с общими настройками прав доступа"""
+    """Базовый класс с общими настройками прав доступа."""
+
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly)
 
 
